@@ -19,6 +19,7 @@ def stripe_config(request):
 @csrf_exempt
 def create_checkout_session(request):
     if request.method == 'GET':
+        amount = request.GET.get('amount')
         domain_url = 'http://localhost:8000/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
@@ -31,7 +32,7 @@ def create_checkout_session(request):
                     {
                         'price_data': {
                             'currency': 'inr',
-                            'unit_amount': 200,
+                            'unit_amount': amount,
                             'product_data': {
                                 'name': 'T-shirt',
                             },
